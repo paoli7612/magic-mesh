@@ -5,6 +5,7 @@ local client = enet.host_create()
 local server = client:connect("127.0.0.1:7612")
 
 function love.load()
+    love.window.setTitle("Client")
     print('Premi un tasto')
 end
 
