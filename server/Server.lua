@@ -14,7 +14,6 @@ function Server(boss)
             elseif event.type == "connect" then
                 boss.clients[clientID] = true
                 boss.new_user(clientID, event.peer)
-                print("Nuovo client connesso:", clientID)
             elseif event.type == "disconnect" then
                 boss.clients[clientID] = nil
                 print("Client disconnesso:", clientID)

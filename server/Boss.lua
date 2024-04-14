@@ -1,13 +1,17 @@
 local s = require 'settings'
 local Server = require 'Server'
 local Player = require 'sprite.Player'
+local Wall = require 'sprite.Wall'
 
 function Boss()
     local boss = {}
     boss.server = Server(boss)
     boss.clients = {}
     boss.players = {}
-    
+    boss.walls = {}
+
+    boss.walls[0] = Wall(boss, 2, 2)
+
     function boss.quit()
         if server then
             boss.server:flush()
@@ -27,6 +31,7 @@ function Boss()
         for k, player in pairs(boss.players) do
             player.draw()
         end
+        boss.walls[0].draw()
     end
 
     function boss.input(clientID, message)

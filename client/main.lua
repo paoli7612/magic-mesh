@@ -1,7 +1,6 @@
 local enet = require "enet"
 
 local client = enet.host_create()
-
 local server = client:connect("127.0.0.1:7612")
 
 function love.load()
@@ -18,12 +17,24 @@ function love.update(dt)
             print("Messaggio dal server:", event.data)
         end
     end
+
+    -- Check the state of the arrow keys and send their state
 end
 
 function love.keypressed(key)
-    server:send('p' .. key)
+    sendKeyState()
 end
 
 function love.keyreleased(key)
-    server:send('r' .. key)
+    sendKeyState()
+end
+
+function sendKeyState()
+    local up = love.keyboard.isDown('up') and '1' or '0'
+    local down = love.keyboard.isDown('down') and '1' or '0'
+    local left = love.keyboard.isDown('left') and '1' or '0'
+    local right = love.keyboard.isDown('right') and '1' or '0'
+    
+    local state = up .. down .. left .. right
+    server:send(state)
 end
