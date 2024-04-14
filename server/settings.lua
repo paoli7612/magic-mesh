@@ -1,5 +1,5 @@
 s = {
-    TILE = 30,
+    TILE = 32,
     TILE_X = 40,
     TILE_Y = 25,
 }

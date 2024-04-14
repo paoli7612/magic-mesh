@@ -21,5 +21,9 @@ function love.update(dt)
 end
 
 function love.keypressed(key)
-    server:send(key)
+    server:send('p' .. key)
+end
+
+function love.keyreleased(key)
+    server:send('r' .. key)
 end

@@ -15,7 +15,7 @@ function love.load()
 end
 
 function love.update(dt)
-    boss.server.receive() -- input from clients
+    boss.update(dt)
 end
 
 function love.draw()

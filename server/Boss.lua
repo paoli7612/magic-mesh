@@ -34,6 +34,14 @@ function Boss()
         boss.players[clientID].input(message)
     end
 
+    function boss.update(dt)
+        boss.server.receive() -- input from clients
+        for k, player in pairs(boss.players) do
+            player.update(dt)
+        end
+    end
+
+
     return boss
 end
 
