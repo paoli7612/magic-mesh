@@ -38,3 +38,9 @@ function sendKeyState()
     local state = up .. down .. left .. right
     server:send(state)
 end
+
+function love.quit()
+    server:send('quit')
+    client:flush() -- Ensure that the message is sent immediately
+    love.event.quit()
+end

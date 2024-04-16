@@ -29,21 +29,26 @@ function Boss()
 
     function boss.draw()
         for k, player in pairs(boss.players) do
-            player.draw()
+            if player then                
+                player.draw()
+            end
         end
         boss.walls[0].draw()
     end
 
     function boss.input(clientID, message)
-        print(clientID, message)
-        boss.players[clientID].input(message)
+        if message == 'quit' then
+            table.remove(boss.players, clientID)
+        else
+            boss.players[clientID].input(message)
+        end
     end
 
     function boss.update(dt)
-        boss.server.receive() -- input from clients
         for k, player in pairs(boss.players) do
             player.update(dt)
         end
+        boss.server.receive() -- input from clients
     end
 
 
