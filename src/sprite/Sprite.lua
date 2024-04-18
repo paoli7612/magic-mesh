@@ -5,7 +5,7 @@ function Sprite(boss, x, y, color)
     local sprite = {
         x = x,
         y = y,
-        color = color or {1, 1, 0} 
+        color = color
     }
 
     function sprite.draw()

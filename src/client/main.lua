@@ -7,6 +7,15 @@ function love.load()
     boss = Boss()
 end
 
+function love.draw()
+    love.graphics.setColor(0.5, 0.5, 0.5) 
+    for y=0, s.WINDOW.HEIGHT, s.TILE do
+        for x=0, s.WINDOW.WIDTH, s.TILE do
+            love.graphics.rectangle("line", x, y, s.TILE, s.TILE)
+        end
+    end
+end
+
 function love.update(dt)
     boss.update(dt)
 

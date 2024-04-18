@@ -22,9 +22,9 @@ function Boss()
     function boss.new_user(id, player)
         local x = love.math.random(0, s.TILE_X)
         local y = love.math.random(0, s.TILE_Y)
-        player:send(x)
-        player:send(y)
-        boss.players[id] = Player(boss, x, y)
+        local p = Player(boss, x, y)
+        player:send(p.color_str())
+        boss.players[id] = p
     end
 
     function boss.draw()

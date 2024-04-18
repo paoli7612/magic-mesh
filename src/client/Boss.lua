@@ -11,6 +11,9 @@ function Boss()
     boss.players = {}
     boss.walls = {}
 
+    love.window.setMode(s.WINDOW.WIDTH, s.WINDOW.HEIGHT, {resizable=false})
+
+
     function boss.quit()
         server:send('quit')
         client:flush()
