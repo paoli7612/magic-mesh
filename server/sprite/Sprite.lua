@@ -13,6 +13,16 @@ function Sprite(boss, x, y, color)
         love.graphics.rectangle('fill', sprite.x * s.TILE, sprite.y * s.TILE, s.TILE, s.TILE)
     end
 
+    local t = 0
+    function sprite.update(dt)
+        t = t + dt
+        if t > 0.1 then
+            t = 0
+            sprite.x = (sprite.x + sprite.dx) % s.TILE_X
+            sprite.y = (sprite.y + sprite.dy) % s.TILE_Y
+        end
+    end
+
     return sprite
 end
 
