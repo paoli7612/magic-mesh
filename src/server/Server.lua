@@ -5,18 +5,17 @@ function Server(boss)
         connection = enet.host_create("127.0.0.1:7612")
     }
 
-    function server.receive()
+    function server.update()
         local event = server.connection:service(0) 
         if event then
-            local clientID = event.peer:index()
-            if event.type == "receive" then
+            local clientID = event.peer:index() -- da chi arriva l'event
+            if event.type == "receive" then -- ricevuto un messaggio
                 boss.input(clientID, event.data)
-            elseif event.type == "connect" then
-                boss.clients[clientID] = true
-                boss.new_user(clientID, event.peer)
-            elseif event.type == "disconnect" then
+            elseif event.type == "connect" then -- connesso un nuovo client
+                local x, y = boss.world.empty_pos()
+                boss.players[clientID] = Player(boss, x, y, event.peer)
+            elseif event.type == "disconnect" then -- disconnesso un client
                 boss.clients[clientID] = nil
-                print("Client disconnesso:", clientID)
             end
         end
     end

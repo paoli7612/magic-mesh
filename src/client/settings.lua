@@ -8,5 +8,4 @@ s.WINDOW = {
     HEIGHT = s.TILE*s.TILE_Y
 }
 
-
 return s

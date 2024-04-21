@@ -1,27 +1,21 @@
-local s = require 'settings'
-local Player = require 'sprite.Player'
-local Wall = require 'sprite.Wall'
-local enet = require "enet"
+local s = require 'src.client.settings'
+local Player = require 'src.sprite.Player'
+local Wall = require 'src.sprite.Wall'
+local Client = require 'src.client.Client'
 
 function Boss()
     local boss = {}
-    local client = enet.host_create()
-    local server = client:connect("127.0.0.1:7612")
-    boss.clients = {}
-    boss.players = {}
-    boss.walls = {}
+    local client = Client()
+    boss.player = Player(boss, 9, 9, {1, 0, 0})
 
     love.window.setMode(s.WINDOW.WIDTH, s.WINDOW.HEIGHT, {resizable=false})
 
-
     function boss.quit()
-        server:send('quit')
-        client:flush()
-        love.event.quit()
+        client.quit()
     end
 
     function boss.draw()
-
+        boss.player.draw()
     end
 
     function boss.input(clientID, message)
@@ -33,14 +27,7 @@ function Boss()
     end
 
     function boss.update(dt)
-        local event = client:service()
-        if event then
-            if event.type == "connect" then
-                server:send("Ciao, sono il client1!")
-            elseif event.type == "receive" then
-                print("Messaggio dal server:", event.data)
-            end
-        end
+        client.update(dt)
     end
 
     function boss.sendKeyState()
@@ -50,8 +37,7 @@ function Boss()
         local right = love.keyboard.isDown('right') and '1' or '0'
         
         local state = up .. down .. left .. right
-        server:send(state)
-        print(state)
+        client.send(state)
     end
 
 

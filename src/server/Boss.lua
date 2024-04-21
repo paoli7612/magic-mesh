@@ -1,55 +1,41 @@
-local s = require 'settings'
-local Server = require 'Server'
-local Player = require 'sprite.Player'
-local Wall = require 'sprite.Wall'
+local s = require 'src.server.settings'
+local Server = require 'src.server.Server'
+local Player = require 'src.sprite.Player'
+local World = require 'src.server.World'
 
 function Boss()
     local boss = {}
     boss.server = Server(boss)
-    boss.clients = {}
+    boss.world = World(boss)
     boss.players = {}
-    boss.walls = {}
 
-    boss.walls[0] = Wall(boss, 2, 2)
-
-    function boss.quit()
-        if server then
-            boss.server:flush()
-            boss.server:destroy()
-        end
-    end
-
-    function boss.new_user(id, player)
-        local x = love.math.random(0, s.TILE_X)
-        local y = love.math.random(0, s.TILE_Y)
-        local p = Player(boss, x, y)
-        player:send(p.color_str())
-        boss.players[id] = p
+    function boss.update(dt)
+        boss.world.update(dt)
+        boss.server.update()
     end
 
     function boss.draw()
-        for k, player in pairs(boss.players) do
-            if player then                
-                player.draw()
-            end
-        end
-        boss.walls[0].draw()
+        boss.world.draw()
     end
 
-    function boss.input(clientID, message)
+    function new_player()
+        local p = Player(boss, x, y)
+        return p
+    end
+
+    function boss.input(clientID, message) -- ricevo un input da un client
+        print("Boss.input", clientID, message)
         if message == 'quit' then
             table.remove(boss.players, clientID)
         else
             boss.players[clientID].input(message)
+            if message == '1000' then print("su") 
+            elseif message == '0100' then print("giu")
+            end
         end
     end
 
-    function boss.update(dt)
-        for k, player in pairs(boss.players) do
-            player.update(dt)
-        end
-        boss.server.receive() -- input from clients
-    end
+
 
 
     return boss

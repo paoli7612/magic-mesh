@@ -1,6 +1,6 @@
 
-local s = require 'settings'
-local Boss = require 'Boss'
+local s = require 'src.client.settings'
+local Boss = require 'src.client.Boss'
 
 function love.load()
     love.window.setTitle("Client")
@@ -14,13 +14,11 @@ function love.draw()
             love.graphics.rectangle("line", x, y, s.TILE, s.TILE)
         end
     end
+    boss.draw()
 end
 
 function love.update(dt)
     boss.update(dt)
-
-
-
 end
 
 function love.keypressed(key)
