@@ -1,12 +1,18 @@
 local enet = require 'enet'
 local Player = require 'game.Player'
 local Map = require 'game.Map'
+local Wall = require 'game.Wall'
+
 function Server()
     local server = {
         players = {},
-        connection = enet.host_create("127.0.0.1:7612"),
-        map = Map('Spawn', 12, 12)
+        connection = enet.host_create("127.0.0.1:7612")
     }
+    server.map = Map(server,'Spawn', 12, 9)
+
+    table.insert(server.map.walls, Wall(server, 2, 2))
+    table.insert(server.map.walls, Wall(server, 2, 3))
+    table.insert(server.map.walls, Wall(server, 4, 5))
     print('Start server: localhost:7612')
     
     function server.update(dt)
@@ -27,6 +33,7 @@ function Server()
     end
 
     function server.draw()
+        server.map.draw()
     end
 
     function server.quit()

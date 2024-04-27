@@ -1,0 +1,3 @@
+return {
+    tile = 32
+}

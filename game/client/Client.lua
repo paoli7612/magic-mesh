@@ -1,5 +1,6 @@
 local enet = require 'enet'
 local Player = require 'game.Player'
+local Wall = require 'game.Wall'
 local Map = require 'game.Map'
 
 function Client()
@@ -26,7 +27,14 @@ function Client()
 
     function client.setMap(name, w, h)
         love.window.setTitle('Magic Mesh - ' .. name)
-        client.map = Map(name, tonumber(w), tonumber(h))
+        client.map = Map(client, name, w, h)
+    end
+
+    function client.addSprite(sprite, x, y)
+        if sprite == 'wall  ' then
+            w = Wall(client, x, y)
+            table.insert(client.map.walls, w)
+        end
     end
 
     function client.draw()
