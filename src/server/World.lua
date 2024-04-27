@@ -5,6 +5,7 @@ function World(boss)
     world = {}
     world.walls = {}
     world.walls[0] = Wall(boss, 2, 2)
+    world.walls[1] = Wall(boss, 3, 4)
 
     function world.new_user(id, player)
         local x = love.math.random(0, s.TILE_X)
@@ -15,12 +16,18 @@ function World(boss)
     end
 
     function world.draw()
+        for k, wall in pairs(world.walls) do
+            if wall then                
+                wall.draw()
+            end
+        end
+        
         for k, player in pairs(boss.players) do
             if player then                
                 player.draw()
             end
         end
-        world.walls[0].draw()
+
     end
 
     function world.update(dt)
@@ -34,6 +41,17 @@ function World(boss)
         x = love.math.random(0, s.TILE_X)
         y = love.math.random(0, s.TILE_Y)
         return x, y
+    end
+
+    function world.get_row(y)
+        local row = {}
+        for i, wall in pairs(world.walls) do
+            if wall.y == y then
+                print(wall.x, wall.y)
+                table.insert(row, wall)
+            end
+        end
+        return row
     end
 
     return world

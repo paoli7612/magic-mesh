@@ -8,6 +8,11 @@ function Player(boss, x, y, peer)
 
     player.dx = 0
     player.dy = 0
+    player.peer = peer
+
+    function player.send(message)
+        player.peer:send(message)
+    end
 
     function player.input(message)
         local up, down = message:sub(1,1) == '1', message:sub(2,2) == '1'
@@ -30,6 +35,15 @@ function Player(boss, x, y, peer)
             t = 0
             player.x = (player.x + player.dx) % s.TILE_X
             player.y = (player.y + player.dy) % s.TILE_Y
+            if player.is_server then
+                if player.dy == -1 then
+                    local row = world.get_row(player.y - 3)
+                    for k, thing in pairs(row) do
+                        print("thing", thing.x, thing.y)
+                        player.send(thing.x)
+                    end
+                end
+            end
         end
     end
 

@@ -28,10 +28,8 @@ function Boss()
         if message == 'quit' then
             table.remove(boss.players, clientID)
         else
-            boss.players[clientID].input(message)
-            if message == '1000' then print("su") 
-            elseif message == '0100' then print("giu")
-            end
+            local player = boss.players[clientID]
+            player.input(message)
         end
     end
 

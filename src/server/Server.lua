@@ -14,6 +14,7 @@ function Server(boss)
             elseif event.type == "connect" then -- connesso un nuovo client
                 local x, y = boss.world.empty_pos()
                 boss.players[clientID] = Player(boss, x, y, event.peer)
+                boss.players[clientID].is_server = true
             elseif event.type == "disconnect" then -- disconnesso un client
                 boss.clients[clientID] = nil
             end
