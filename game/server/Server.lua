@@ -8,13 +8,15 @@ function Server()
         players = {},
         connection = enet.host_create("127.0.0.1:7612")
     }
-    server.map = Map(server,'Spawn', 12, 9)
+    server.map = Map(server,'Spawn', 20, 20)
 
     love.window.setTitle('[Server] Magic Mesh')
 
-    table.insert(server.map.walls, Wall(server, 2, 2))
-    table.insert(server.map.walls, Wall(server, 2, 3))
-    table.insert(server.map.walls, Wall(server, 4, 5))
+    for x=1, server.map.w-1, server.map.w-2 do
+        for y=1, server.map.h-1 do
+            table.insert(server.map.walls, Wall(server, x, y))
+        end
+    end
     print('Start server: localhost:7612')
     
     function server.update(dt)

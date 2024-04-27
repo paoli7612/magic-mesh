@@ -14,6 +14,14 @@ function love.draw()
     client.draw()
 end
 
+function love.keypressed(key)
+    client.keyUpdate(key)
+end
+
+function love.keyreleased(key)
+    client.keyUpdate(key)
+end
+
 function love.quit()
     client.quit()
 end

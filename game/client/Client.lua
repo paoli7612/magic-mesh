@@ -14,6 +14,7 @@ function Client()
     end
     
     function client.update(dt)
+        client.player.update(dt)
         local event = c:service()
         if event then
             if event.type == "connect" then -- quando il client si connette manda il primo CON<[username]
@@ -35,6 +36,15 @@ function Client()
             w = Wall(client, x, y)
             table.insert(client.map.walls, w)
         end
+    end
+
+    function client.keyUpdate(key)
+        local dx, dy = 0, 0
+        if love.keyboard.isDown("right") then dx = dx + 1 end
+        if love.keyboard.isDown("left") then dx = dx - 1 end
+        if love.keyboard.isDown("up") then dy = dy - 1 end
+        if love.keyboard.isDown("down") then dy = dy + 1 end
+        client.player.dx, client.player.dy = dx, dy
     end
 
     function client.draw()

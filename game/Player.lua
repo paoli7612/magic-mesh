@@ -6,6 +6,22 @@ function Player(boss, peer)
     player.y = love.math.random(1, 10)
     player.peer = peer
     player.username = '[uname]'
+    player.dx, player.dy = 0, 0
+
+    player.time = 0
+    function player.update(dt)
+        player.time = player.time + dt
+        if player.time > 0.5 then
+            player.time = 0
+            player.x = player.x + player.dx
+            player.y = player.y + player.dy
+            player.send_update()
+        end
+    end
+
+    function player.send_update()
+        player.peer:send('UPD<' .. player.to_string())
+    end
 
     function player.receive(data)
         type, dest, msg = data:sub(1, 3), data:sub(4, 4), data:sub(5)
@@ -33,6 +49,9 @@ function Player(boss, peer)
                 for k, wall in pairs(boss.map.walls) do
                     player.send('SPR>' .. wall.to_string())
                 end
+            elseif type == 'UPD' then
+                local username, x, y = msg:sub(1, 12), msg:sub(13, 14), msg:sub(15, 16)
+                player.x, player.y = tonumber(x, 10), tonumber(y, 10)
             end
         end
     end
