@@ -6,10 +6,9 @@ function love.conf(t)
     t.accelerometerjoystick = true      -- Enable the accelerometer on iOS and Android by exposing it as a Joystick (boolean)
     t.externalstorage = false           -- True to save files (and read from the save directory) in external storage on Android (boolean) 
     t.gammacorrect = false              -- Enable gamma-correct rendering, when supported by the system (boolean)
-
     t.audio.mic = false                 -- Request and use microphone capabilities in Android (boolean)
     t.audio.mixwithsystem = true        -- Keep background music playing when opening LOVE (boolean, iOS and Android only)
-
+    
     t.window.title = "Magic Mesh"       -- The window title (string)
     t.window.icon = 'assets/icon.png'   -- Filepath to an image to use as the window's icon (string)
     t.window.width = 900                -- The window width (number)
@@ -24,7 +23,7 @@ function love.conf(t)
     t.window.msaa = 0                   -- The number of samples to use with multi-sampled antialiasing (number)
     t.window.depth = nil                -- The number of bits per sample in the depth buffer
     t.window.stencil = nil              -- The number of bits per sample in the stencil buffer
-    t.window.display = 1                -- Index of the monitor to show the window in (number)
+    t.window.display = 2                -- Index of the monitor to show the window in (number)
     t.window.highdpi = false            -- Enable high-dpi mode for the window on a Retina display (boolean)
     t.window.usedpiscale = true         -- Enable automatic DPI scaling when highdpi is set to true as well (boolean)
     t.window.x = nil                    -- The x-coordinate of the window's position in the specified display (number)

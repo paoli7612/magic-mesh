@@ -1,12 +1,14 @@
 # Magic mesh
-### Multiplayer adventure developed using Lua and Love2D
 
+### Server
 ```bash
-$ love server
+$ love game --server
 ```
 
+
+### Client
 ```bash
-$ love client
+$ love game
 ```
 
 <img src="image.png"></img>

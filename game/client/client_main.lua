@@ -2,6 +2,10 @@ local Client = require('game.client.Client')
 
 local client = Client()
 
+function love.load()
+    client.load()
+end
+
 function love.update(dt)
     client.update(dt)
 end
