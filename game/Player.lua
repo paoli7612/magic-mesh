@@ -2,8 +2,8 @@
 function Player(boss, peer)
     local player = {}
 
-    player.x = 4
-    player.y = 8
+    player.x = love.math.random(1, 10)
+    player.y = love.math.random(1, 10)
     player.peer = peer
     player.username = '[uname]'
 

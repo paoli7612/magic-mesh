@@ -10,6 +10,8 @@ function Server()
     }
     server.map = Map(server,'Spawn', 12, 9)
 
+    love.window.setTitle('[Server] Magic Mesh')
+
     table.insert(server.map.walls, Wall(server, 2, 2))
     table.insert(server.map.walls, Wall(server, 2, 3))
     table.insert(server.map.walls, Wall(server, 4, 5))
