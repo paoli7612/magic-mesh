@@ -1,8 +1,6 @@
 local Server = require('game.server.Server')
 
-function love.load()
-    server = Server()
-end
+local server = Server()
 
 function love.update(dt)
     server.update(dt)
