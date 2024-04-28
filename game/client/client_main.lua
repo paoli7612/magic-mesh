@@ -1,6 +1,7 @@
 local Client = require('game.client.Client')
 
-local client = Client()
+
+local client = Client('usr_'..love.math.random(1, 1000000))
 
 function love.load()
     client.load()

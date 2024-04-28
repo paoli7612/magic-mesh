@@ -3,25 +3,30 @@ local Player = require 'game.Player'
 local Wall = require 'game.Wall'
 local Map = require 'game.Map'
 
-function Client()
+function Client(username)
     local c = enet.host_create()
-    local client = {}
-
+    local client = {
+        username = username,
+        players = {},
+        map = nil
+    }
+    client.map = Map(client, 'Lobby', 3, 3)
+    client.connection = c:connect("127.0.0.1:9988")
+    client.players[username] = Player(client, client.connection)
+    client.players[username].color = {0, 0, 1}
+    
     function client.load()
-        print('Trying to connect: localhost:7612')
-        client.connection = c:connect("127.0.0.1:7612")
-        client.player = Player(client, client.connection) 
+        print('Trying to connect: localhost:9988')
     end
     
     function client.update(dt)
-        client.player.update(dt)
+        client.players[username].update(dt)
         local event = c:service()
         if event then
             if event.type == "connect" then -- quando il client si connette manda il primo CON<[username]
-                client.player.send("CON<Tommaso")
+                client.players[username].send("CON<" .. username)
             elseif event.type == "receive" then
-                print("Messaggio dal server:", event.data)
-                client.player.receive(event.data)
+                client.players[username].receive(event.data)
             end
         end
     end
@@ -31,10 +36,19 @@ function Client()
         client.map = Map(client, name, w, h)
     end
 
-    function client.addSprite(sprite, x, y)
-        if sprite == 'wall  ' then
-            w = Wall(client, x, y)
-            table.insert(client.map.walls, w)
+    function client.addWall(x, y)
+        table.insert(client.map.walls, Wall(client, x, y))
+    end
+
+    function client.addPlayer(username, x, y)
+        if client.players[username] then
+            client.players[username].x = x
+            client.players[username].y = y
+            client.players[username].username = username
+        else
+            local player = Player(client, nil, x, y)
+            player.username = username
+            client.players[username] = player
         end
     end
 
@@ -44,7 +58,7 @@ function Client()
         if love.keyboard.isDown("left") then dx = dx - 1 end
         if love.keyboard.isDown("up") then dy = dy - 1 end
         if love.keyboard.isDown("down") then dy = dy + 1 end
-        client.player.dx, client.player.dy = dx, dy
+        client.players[username].dx, client.players[username].dy = dx, dy
     end
 
     function client.draw()

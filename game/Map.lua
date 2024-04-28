@@ -6,8 +6,8 @@ function Map(boss, name, w, h)
         name = name,
         w = w,
         h = h,
-        walls = {},
-        players = {}
+        walls = {}, -- [1, 2, 3, ...] = Player()
+        players = {} --[username] = Player()
     }
     map.tile = 32
 
@@ -32,8 +32,6 @@ function Map(boss, name, w, h)
             for i, player in pairs(boss.players) do
                 player.draw()
             end
-        elseif boss.player then
-            boss.player.draw()
         end
     end
 

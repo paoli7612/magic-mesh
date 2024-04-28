@@ -11,10 +11,9 @@ function Wall(boss, x, y)
     end
 
     function wall.to_string()
-        local sprite = 'wall  '
-        local x = string.format("%03d", wall.x)
-        local y = string.format("%03d", wall.y)
-        return sprite .. x .. y
+        local x = string.format("%02d", wall.x)
+        local y = string.format("%02d", wall.y)
+        return x .. y
     end
 
     return wall
