@@ -26,6 +26,7 @@ function Client(username)
             if event.type == "connect" then -- quando il client si connette manda il primo CON<[username]
                 client.players[username].send("CON<" .. username)
             elseif event.type == "receive" then
+                print("ricevo dal serer" .. event.data)
                 client.players[username].receive(event.data)
             end
         end

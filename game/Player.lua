@@ -21,10 +21,10 @@ function Player(boss, peer, x, y, username)
     
     player.time = 0
     function player.update(dt)
-        if player.x and player.y then
-            player.time = player.time + dt
-            if player.time > 0.5 then
-                if player.dx ~= 0 or player.dy ~= 0 then    
+        player.time = player.time + dt
+        if player.time > 0.2 then -- se è passato il tempo
+            if player.dx ~= 0 or player.dy ~= 0 then -- se vuole muoversi
+                if not boss.map.get(player.x + player.dx, player.y + player.dy) then -- se c'è spazio
                     player.time = 0
                     player.x = player.x + player.dx
                     player.y = player.y + player.dy
@@ -82,7 +82,6 @@ function Player(boss, peer, x, y, username)
         if player.x and player.y then
             local tile = boss.map.tile
             love.graphics.setColor(player.color)
-
             love.graphics.rectangle('fill', player.x*tile, player.y*tile, tile, tile)
             love.graphics.printf(player.username, player.x*tile, (player.y-1)*tile, 100)
         end

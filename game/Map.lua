@@ -6,8 +6,7 @@ function Map(boss, name, w, h)
         name = name,
         w = w,
         h = h,
-        walls = {}, -- [1, 2, 3, ...] = Player()
-        players = {} --[username] = Player()
+        walls = {} -- [1, 2, 3, ...] = Player()
     }
     map.tile = 32
 
@@ -16,6 +15,19 @@ function Map(boss, name, w, h)
         local w_str = string.format("%02d", map.w)
         local h_str = string.format("%02d", map.h)
         return name .. w_str .. h_str
+    end
+
+    function map.get(x, y)
+        for i, p in pairs(boss.players) do
+            if p.x == x and p.y == y then
+                return p
+            end
+        end
+        for i, w in pairs(map.walls) do
+            if w.x == x and w.y == y then
+                return w
+            end
+        end
     end
 
     function map.draw()
