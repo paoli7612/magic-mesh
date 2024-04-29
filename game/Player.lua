@@ -24,10 +24,12 @@ function Player(boss, peer, x, y, username)
         if player.x and player.y then
             player.time = player.time + dt
             if player.time > 0.5 then
-                player.time = 0
-                player.x = player.x + player.dx
-                player.y = player.y + player.dy
-                player.send('PLR<' .. player.to_string())
+                if player.dx ~= 0 or player.dy ~= 0 then    
+                    player.time = 0
+                    player.x = player.x + player.dx
+                    player.y = player.y + player.dy
+                    player.send('PLR<' .. player.to_string())
+                end
             end
         end
     end
