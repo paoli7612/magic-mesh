@@ -1,3 +1,4 @@
+local Images = require 'game.Images'
 local WINDOW_WIDTH = love.graphics.getWidth()
 local WINDOW_HEIGHT = love.graphics.getHeight()
 
@@ -6,7 +7,8 @@ function Map(boss, name, w, h)
         name = name,
         w = w,
         h = h,
-        walls = {} -- [1, 2, 3, ...] = Player()
+        walls = {}, -- [1, 2, 3, ...] = Player()
+        images = Images()
     }
     map.tile = 32
 
